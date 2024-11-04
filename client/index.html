@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Sets the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures proper scaling on different devices -->
+    <title>MinuteMaster</title> <!-- Title of the application displayed in the browser tab -->
+    <link rel="stylesheet" href="style.css"> <!-- Links to the external CSS file for styling -->
+</head>
+<body>
+    <div class="container"> <!-- Main container for the application content -->
+        <h1>Minute Master - Master timing & approach to coding challenges</h1> <!-- Main heading of the application -->
+        <label for="difficulty">Choose difficulty level:</label> <!-- Label for the difficulty selector -->
+        <select id="difficulty"> <!-- Dropdown to select the difficulty level -->
+            <option value="easy" selected>Easy</option> <!-- Option for easy difficulty -->
+            <option value="medium">Medium</option> <!-- Option for medium difficulty -->
+            <option value="hard">Hard</option> <!-- Option for hard difficulty -->
+        </select>
+
+        <div class="timer"> <!-- Container for the timer display -->
+            <span id="time">15:00</span> <!-- Displays the remaining time -->
+        </div>
+
+        <div class="controls"> <!-- Container for the control buttons -->
+            <button id="start">Start</button> <!-- Button to start the timer -->
+            <button id="pause">Pause</button> <!-- Button to pause the timer -->
+            <button id="reset">Reset</button> <!-- Button to reset the timer -->
+        </div>
+
+        <h2 id="current-task">Task 1: Read Instructions Aloud</h2> <!-- Displays the current task -->
+
+        <div class="task-list"> <!-- Container for the task list -->
+            <ul id="tasks"></ul> <!-- Unordered list for dynamically displaying tasks -->
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- Links to the external JavaScript file for functionality -->
+</body>
+</html>
