@@ -73,6 +73,7 @@ To run the project:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/ThirDecade2020/MinuteMaster.git
+   ```
 
 2. **Run the application**:
    - Open `index.html` directly in a browser, or serve it locally using:
