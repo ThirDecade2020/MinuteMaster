@@ -45,6 +45,7 @@ MinuteMaster/
 ├── .gitignore                  # Specifies files to ignore in GitHub repository
 ├── LICENSE                     # License information for the project
 └── README.md                   # Project overview, instructions, and structure (you’re reading this)
+```
 
 ## Application Functionality
 
