@@ -1,31 +1,24 @@
-MinuteMaster - Master Timing & Approach for Coding Challenges
+# MinuteMaster - Master Timing & Approach for Coding Challenges
 
-Overview
+## Overview
+MinuteMaster is a web application designed to help developers stay focused and organized during coding challenges. The app provides a structured, timed workflow with specific tasks, allowing users to practice time management and maintain a step-by-step approach to solving coding problems.
 
-MinuteMaster is a web application designed to help developers stay focused and organized during coding challenges. The app provides a structured, timed workflow with specific tasks, allowing users to practice time management and maintain a step-by-step approach to solving coding problems. The app’s functionality includes selecting difficulty levels, a countdown timer, and task-specific durations to guide users through a standardized coding workflow.
+Key functionalities include selecting difficulty levels, a countdown timer, and task-specific durations to guide users through a standardized coding workflow.
 
-Problem Solved
+## Problem Solved
+In coding interviews and competitive programming, effective time management and a structured approach are essential. MinuteMaster tackles these needs by:
+- **Guiding developers through seven predefined tasks**, each focusing on essential coding stages (e.g., reading instructions, pseudocode, coding, testing).
+- **Offering an adjustable difficulty setting** (easy, medium, hard), which adapts the task durations accordingly.
+- **Providing start, pause, and reset controls** to give users flexibility and control over their practice sessions.
 
-In coding interviews and competitive programming, effective time management and a structured approach are essential. MinuteMaster tackles this by:
+## Tech Stack
+- **HTML**: Defines the application’s structure and layout, including elements for the timer, task list, difficulty selection, and controls.
+- **CSS**: Styles the interface, focusing on readability and user experience.
+- **JavaScript**: Manages app functionality, including the timer, task sequencing, and difficulty-based task adjustments.
 
-Guiding developers through seven predefined tasks, each focusing on essential coding stages (e.g., reading instructions, pseudocode, coding, testing).
+## Project Structure
 
-Offering an adjustable difficulty setting (easy, medium, hard), which adapts the task durations accordingly.
-
-Providing start, pause, and reset controls to give users flexibility and control over their practice sessions.
-
-Tech Stack
-
-HTML: Defines the application’s structure and main layout, including elements for the timer, task list, difficulty selection, and user controls.
-
-CSS: Styles the interface, focusing on readability and user experience. Colors and font choices are aimed at creating a calm environment conducive to focused practice.
-
-JavaScript: Manages the app’s functionality, including the timer, task sequencing, and difficulty-based task adjustments.
-
-Project Structure
-
-Here’s a breakdown of the project structure, so users understand each part:
-
+```plaintext
 MinuteMaster/
 ├── client/                     # Frontend files for the web interface
 │   ├── index.html              # Main HTML file, defines structure and elements
@@ -53,51 +46,47 @@ MinuteMaster/
 ├── LICENSE                     # License information for the project
 └── README.md                   # Project overview, instructions, and structure (you’re reading this)
 
-Application Functionality
+## Application Functionality
 
-Main Components
+### Main Components
+- **Timer**: 
+  - Starts at 15 minutes for easy mode (adjustable with difficulty).
+  - Counts down, showing the remaining time in `MM:SS` format.
+  - Dynamically updates per task, helping users stay on track.
 
-Timer:
+- **Difficulty Levels**: 
+  - Users can select from easy, medium, and hard levels.
+  - Task durations adjust according to difficulty, with harder levels allocating more time for each task.
 
-Starts at 15 minutes for easy mode (adjustable with difficulty).
-Counts down, showing the remaining time in MM:SS format.
-Dynamically updates per task, allowing users to stay on track.
+- **Task List**:
+  - Sequential tasks include essential coding steps like reading instructions, pseudocode, coding, testing, and debugging.
+  - Each task is displayed with its remaining time.
 
-Difficulty Levels:
+- **User Controls**:
+  - Start, pause, and reset buttons give users control over the timer and session.
 
-Users can select from easy, medium, and hard levels.
-The time for each task is adjusted based on difficulty, with harder levels allocating more time for each task.
+## Getting Started
 
-Task List:
+To run the project:
 
-Sequential tasks include essential coding steps like reading instructions, pseudocode, coding, testing, and debugging.
-Each task is displayed with its remaining time, guiding the user through the session.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/ThirDecade2020/MinuteMaster.git
 
-User Controls:
+2. **Run the application**:
+   - Open `index.html` directly in a browser, or serve it locally using:
+     ```bash
+     cd client
+     python3 -m http.server 8080
+     ```
+   - Access the application at `http://localhost:8080`
 
-Start, pause, and reset buttons give users control over the timer and session.
-Getting Started
+## Future Enhancements
 
-To run the project
+- **Backend Integration**: Potential setup for tracking session statistics or saving progress.
+- **Database Support**: Placeholder backend structure to store user sessions or custom task lists.
+- **Enhanced Testing**: Expanding UI and backend testing to cover more scenarios.
 
-Clone the repository:
-
-git clone https://github.com/ThirDecade2020/MinuteMaster.git
-
-Open index.html directly in a browser or serve it locally using:
-
-cd client
-python3 -m http.server 8080
-
-Access the application at http://localhost:8080
-
-Future Enhancements
-
-Backend Integration: Potential future setup for tracking session statistics or saving progress.
-
-Database Support: With the placeholder backend structure, a database can be added for storing user sessions or custom task lists.
-
-Enhanced Testing: UI testing and backend API testing can be expanded to cover all user scenarios.
-License
-
+## License
 This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
+
