@@ -10,8 +10,8 @@ let tasks = [
     "Pseudo-function-code Aloud", // Third task in the list
     "Function-code-translation Aloud", // Fourth task in the list
     "Test-code-translation Aloud", // Fifth task in the list
-    "Break / Debug Aloud", // Sixth task in the list
-    "Space / Time Complexity Aloud" // Seventh task in the list
+    "Break & Debug Aloud", // Sixth task in the list
+    "Space-time-solution-complexity Aloud" // Seventh task in the list
 ];
 
 let totalSeconds = 900; // Initializes the total countdown time to 900 seconds (15 minutes)
