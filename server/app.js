@@ -1,47 +1,54 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import bodyParser from "body-parser";
 import OpenAI from "openai";
 
 dotenv.config();
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// POST /api/solve
 app.post("/api/solve", async (req, res) => {
-    const { taskName, challengeQuestion, suggestedSolution, taskStyle } = req.body;
-
     try {
-        let prompt;
+        const { taskName, challengeQuestion, suggestedSolution, taskStyle } = req.body;
+
+        let prompt = "";
+
         if (taskStyle === "pseudocode") {
-            prompt = `Write a high-level pseudocode or English description for this task. Do NOT use any programming language:\n\n${challengeQuestion}`;
+            prompt = `Provide a high-level pseudocode for the following challenge question in English (no programming language specific syntax):\n\n${challengeQuestion}`;
+        } else if (taskStyle === "break-debug") {
+            prompt = `You are an interviewer AI. Provide ONE concise way to break the candidate's solution and ONE concise way to debug it. Output only two lines: "How to break the code: ..." and "How to debug it: ...". Challenge question:\n${challengeQuestion}\nSuggested solution (if any): ${suggestedSolution || "none"}`;
         } else if (taskStyle === "iterative") {
-            prompt = `Provide a clean code solution for this task. Also provide progressively optimized versions to improve time/space complexity:\n\n${challengeQuestion}`;
+            // One click, return all 3 solutions: original + 2 alternatives
+            prompt = `You are an AI coding interviewer. Provide three distinct solutions for the following coding challenge:
+1. Include the original solution (or standard approach)
+2. Provide two alternative optimized solutions, each different from the previous
+Include code blocks for each solution and a brief time and space complexity analysis for each. Challenge question:\n${challengeQuestion}\nSuggested solution (if any): ${suggestedSolution || "none"}`;
         } else {
-            prompt = `Provide a clean code solution for this task. Use any necessary details from the suggested solution if provided:\n\n${challengeQuestion}\n\nSuggested solution (optional):\n${suggestedSolution || ""}`;
+            prompt = `Provide a working code solution for the following coding challenge. Output only the code:
+Challenge question:
+${challengeQuestion}
+Suggested solution (if any): ${suggestedSolution || "none"}`;
         }
 
         const completion = await openai.chat.completions.create({
-            model: "gpt-4.1-mini",
-            messages: [
-                { role: "system", content: "You are a helpful coding assistant." },
-                { role: "user", content: prompt }
-            ],
-            temperature: 0.3,
+            model: "gpt-4o-mini",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0
         });
 
         const solution = completion.choices[0].message.content.trim();
-
         res.json({ solution });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Failed to generate solution" });
+        res.status(500).json({ error: "Failed to fetch solution." });
     }
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+});
 

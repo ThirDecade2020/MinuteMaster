@@ -36,6 +36,7 @@ function getTaskStyle(taskName) {
     if (taskName === "Read Instructions Aloud") return "meta";
     if (taskName.includes("Pseudo")) return "pseudocode";
     if (taskName.includes("Space-time-solution")) return "iterative";
+    if (taskName === "Break & Debug Aloud") return "break-debug";
     return "code";
 }
 
@@ -63,11 +64,28 @@ function escapeHtml(text) {
         .replace(/'/g, "&#039;");
 }
 
+function extractCodeAndComplexity(markdown) {
+    // Returns an array of { code: '...', complexity: '...' }
+    const codeBlocks = [];
+    const regex = /```(?:\w+)?\n([\s\S]*?)```/g;
+    let match;
+    while ((match = regex.exec(markdown)) !== null) {
+        const code = match[1].trim();
+        // Extract Time/Space Complexity below code if exists
+        let afterCode = markdown.slice(regex.lastIndex);
+        let complexityMatch = afterCode.match(/Time Complexity:[^\n]*(\n|$)[\s\S]*?Space Complexity:[^\n]*/i);
+        let complexity = complexityMatch ? complexityMatch[0].trim() : '';
+        codeBlocks.push({ code, complexity });
+    }
+    // fallback: if no code blocks, use entire markdown as code
+    if (codeBlocks.length === 0) codeBlocks.push({ code: markdown, complexity: '' });
+    return codeBlocks;
+}
+
 async function handleCheat(taskIndex) {
     const li = taskList.children[taskIndex];
     const solutionContainer = li.querySelector('.solution-container');
 
-    // Toggle collapse if already shown
     if (solutionContainer.innerHTML.trim() !== '') {
         solutionContainer.innerHTML = '';
         return;
@@ -75,7 +93,6 @@ async function handleCheat(taskIndex) {
 
     const taskStyle = getTaskStyle(tasks[taskIndex]);
 
-    // Handle the special first task
     if (taskStyle === "meta") {
         solutionContainer.innerHTML = `<pre><code>Read the question out loud dummy. Cheating is more applicable to the next tasks.</code></pre>`;
         return;
@@ -96,22 +113,29 @@ async function handleCheat(taskIndex) {
         });
 
         const data = await response.json();
-        solutionContainer.innerHTML = `<pre><code>${escapeHtml(data.solution)}</code></pre>`;
+        const solutions = extractCodeAndComplexity(data.solution);
+
+        solutionContainer.innerHTML = '';
+        solutions.forEach(s => {
+            solutionContainer.innerHTML += `<pre><code>${escapeHtml(s.code)}</code></pre>`;
+            if (s.complexity) {
+                solutionContainer.innerHTML += `<div class="complexity">${escapeHtml(s.complexity)}</div>`;
+            }
+        });
     } catch (err) {
         solutionContainer.textContent = 'Error fetching solution. Check console.';
         console.error(err);
     }
 }
 
+// Timer functions
 function startTimer() {
     if (!timerInterval) {
         timerInterval = setInterval(() => {
             if (totalSeconds > 0 && currentTaskIndex < tasks.length) {
                 totalSeconds--;
                 taskTimeRemaining--;
-
                 timeDisplay.textContent = formatTime(totalSeconds);
-
                 if (taskTimeRemaining <= 0) {
                     currentTaskIndex++;
                     if (currentTaskIndex < tasks.length) {
@@ -138,10 +162,8 @@ function resetTimer() {
 
     const selectedDifficulty = difficultySelect.value;
     totalSeconds = selectedDifficulty === 'medium' ? 1800 : selectedDifficulty === 'hard' ? 2700 : 900;
-
     currentTaskIndex = 0;
     taskTimeRemaining = taskDurations[selectedDifficulty][0];
-
     timeDisplay.textContent = formatTime(totalSeconds);
     currentTaskDisplay.textContent = `Task 1: ${tasks[0]}`;
     updateTaskList(selectedDifficulty);

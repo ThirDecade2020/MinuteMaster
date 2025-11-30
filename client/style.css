@@ -138,3 +138,12 @@ label {
     white-space: pre-wrap;
 }
 
+.complexity {
+  font-size: 0.9em;
+  color: #333;
+  background-color: #f0f0f0;
+  padding: 6px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
