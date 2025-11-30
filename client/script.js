@@ -23,43 +23,8 @@ const timeDisplay = document.getElementById('time');
 const difficultySelect = document.getElementById('difficulty');
 const taskList = document.getElementById('tasks');
 const currentTaskDisplay = document.getElementById('current-task');
-
 const challengeInput = document.getElementById('challenge-question');
-const suggestedSolutionInput = document.getElementById('suggested-solution');
-
-// Fetch cheat solution from backend API
-async function fetchCheatSolution(taskName) {
-    const challengeQuestion = challengeInput.value.trim();
-    const suggestedSolution = suggestedSolutionInput.value.trim();
-
-    if (!challengeQuestion) {
-        return "Please paste the challenge question above to get a solution.";
-    }
-
-    try {
-        const response = await fetch("http://localhost:3000/api/solve", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                taskName,
-                challengeQuestion,
-                suggestedSolution
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        return data.solution || "No solution returned from the AI.";
-    } catch (error) {
-        console.error("Error fetching solution:", error);
-        return "Error fetching solution. Check console for details.";
-    }
-}
+const suggestedInput = document.getElementById('suggested-solution');
 
 function formatTime(seconds) {
     let minutes = Math.floor(seconds / 60);
@@ -67,49 +32,65 @@ function formatTime(seconds) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
 
+function getTaskStyle(taskName) {
+    if (taskName.includes("Pseudo")) return "pseudocode";
+    if (taskName.includes("Space-time-solution")) return "iterative";
+    return "code";
+}
+
 function updateTaskList(difficulty) {
     taskList.innerHTML = '';
     let durations = taskDurations[difficulty];
-
     tasks.forEach((task, index) => {
-        const li = document.createElement('li');
-
-        // Task title
-        const taskTitle = document.createElement('span');
-        taskTitle.textContent = `${task} - ${(durations[index] / 60).toFixed(2)} min`;
-        li.appendChild(taskTitle);
-
-        // Cheat button
-        const cheatBtn = document.createElement('button');
-        cheatBtn.textContent = 'Cheat';
-        cheatBtn.style.marginLeft = '10px';
-        li.appendChild(cheatBtn);
-
-        // Solution container (hidden by default)
-        const solutionDiv = document.createElement('div');
-        solutionDiv.style.display = 'none';
-        solutionDiv.style.marginTop = '5px';
-        solutionDiv.style.padding = '8px';
-        solutionDiv.style.backgroundColor = '#f0f0f0';
-        solutionDiv.style.borderRadius = '4px';
-        li.appendChild(solutionDiv);
-
-        // Cheat button click handler
-        cheatBtn.addEventListener('click', async () => {
-            if (solutionDiv.style.display === 'none') {
-                solutionDiv.textContent = "Loading...";
-                solutionDiv.style.display = 'block';
-                cheatBtn.textContent = 'Hide';
-                const solution = await fetchCheatSolution(task);
-                solutionDiv.textContent = solution;
-            } else {
-                solutionDiv.style.display = 'none';
-                cheatBtn.textContent = 'Cheat';
-            }
-        });
-
+        let li = document.createElement('li');
+        li.innerHTML = `${task} - ${(durations[index] / 60).toFixed(2)} min <button class="cheat-btn">Cheat</button><div class="solution-container"></div>`;
         taskList.appendChild(li);
     });
+
+    const cheatButtons = document.querySelectorAll('.cheat-btn');
+    cheatButtons.forEach((button, idx) => {
+        button.addEventListener('click', () => handleCheat(idx));
+    });
+}
+
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+async function handleCheat(taskIndex) {
+    const li = taskList.children[taskIndex];
+    const solutionContainer = li.querySelector('.solution-container');
+
+    if (solutionContainer.innerHTML.trim() !== '') {
+        solutionContainer.innerHTML = '';
+        return;
+    }
+
+    solutionContainer.innerHTML = 'Fetching solution...';
+
+    try {
+        const response = await fetch('http://localhost:3000/api/solve', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                taskName: tasks[taskIndex],
+                challengeQuestion: challengeInput.value,
+                suggestedSolution: suggestedInput.value,
+                taskStyle: getTaskStyle(tasks[taskIndex])
+            })
+        });
+
+        const data = await response.json();
+        solutionContainer.innerHTML = `<pre><code>${escapeHtml(data.solution)}</code></pre>`;
+    } catch (err) {
+        solutionContainer.textContent = 'Error fetching solution. Check console.';
+        console.error(err);
+    }
 }
 
 function startTimer() {
@@ -170,6 +151,5 @@ difficultySelect.addEventListener('change', (event) => {
     updateTaskList(selectedDifficulty);
 });
 
-// Initialize task list
 updateTaskList('easy');
 

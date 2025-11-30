@@ -5,53 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MinuteMaster</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Two-column page layout */
-        .page-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 20px;
-        }
-
-        .main-container {
-            flex: 1;
-            max-width: 600px;
-        }
-
-        .input-container {
-            flex: 1;
-            max-width: 400px;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        .input-container label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .input-container textarea {
-            width: 100%;
-            min-height: 150px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            resize: vertical;
-            font-family: monospace;
-            font-size: 0.95em;
-            margin-bottom: 15px;
-        }
-    </style>
 </head>
 <body>
-    <div class="page-container">
-        <!-- Left: Main timer and tasks -->
-        <div class="main-container container">
+    <div class="main-container">
+        <div class="timer-container">
             <h1>Minute Master - Master timing & approach to coding challenges</h1>
 
             <label for="difficulty">Choose difficulty level:</label>
@@ -78,17 +35,12 @@
             </div>
         </div>
 
-        <!-- Right: Challenge inputs -->
         <div class="input-container">
-            <div class="challenge-input">
-                <label for="challenge-question">Paste challenge question</label>
-                <textarea id="challenge-question" placeholder="Paste or type the coding challenge here..."></textarea>
-            </div>
+            <h3>Paste challenge question</h3>
+            <textarea id="challenge-question" placeholder="Paste challenge question here..."></textarea>
 
-            <div class="solution-input">
-                <label for="suggested-solution">Paste suggested solution if any</label>
-                <textarea id="suggested-solution" placeholder="Optional: Paste suggested solution here..."></textarea>
-            </div>
+            <h3>Paste suggested solution (optional)</h3>
+            <textarea id="suggested-solution" placeholder="Paste suggested solution here..."></textarea>
         </div>
     </div>
 

@@ -5,12 +5,19 @@ body {
   padding: 20px; /* Adds padding around the body content */
 }
 
-.container {
+.main-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.timer-container {
   background-color: white; /* Sets the background color of the container */
   border-radius: 10px; /* Rounds the corners of the container */
   padding: 20px; /* Adds padding inside the container */
   max-width: 600px; /* Limits the maximum width of the container */
-  margin: 0 auto; /* Centers the container horizontally */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow effect around the container */
 }
 
@@ -73,5 +80,54 @@ label {
   font-size: 1.1em; /* Sets the font size for the task items */
   color: #2e7d32; /* Sets the text color of the task items */
   border-radius: 5px; /* Rounds the corners of the task items */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-container textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+
+.solution-container pre {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  text-align: left;
+  font-family: "Fira Code", monospace;
+  margin-top: 10px;
+}
+
+.cheat-btn {
+  background-color: #7b1fa2;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.cheat-btn:hover {
+  background-color: #4a0072;
 }
 
