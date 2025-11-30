@@ -9,7 +9,7 @@ import { dirname, resolve } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-dotenv.config({ path: resolve(__dirname, '../client/.env') });
+dotenv.config({ path: resolve(__dirname, '../.env') });
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
