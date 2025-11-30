@@ -3,8 +3,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import OpenAI from "openai";
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({ path: resolve(__dirname, '../client/.env') });
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());

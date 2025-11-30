@@ -1,2 +1,7 @@
 # macOS system files
 .DS_Store
+
+# Environment variables
+.env
+/server/.env
+/client/.env
