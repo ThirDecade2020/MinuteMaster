@@ -8,24 +8,35 @@
 </head>
 <body>
     <div class="main-container">
-        <div class="timer-container">
-            <h1>Minute Master - Master timing & approach to coding challenges</h1>
+        <!-- Left column: Challenge inputs -->
+        <div class="input-container">
+            <h2>Paste Challenge Question</h2>
+            <textarea id="challenge-question" placeholder="Paste your coding challenge here..."></textarea>
 
-            <label for="difficulty">Choose difficulty level:</label>
-            <select id="difficulty">
-                <option value="easy" selected>Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
+            <h2>Paste Suggested Solution (Optional)</h2>
+            <textarea id="suggested-solution" placeholder="Paste suggested solution if any..."></textarea>
+        </div>
 
-            <div class="timer">
-                <span id="time">15:00</span>
-            </div>
+        <!-- Right column: Timer and tasks -->
+        <div class="tasks-container">
+            <div class="timer-container">
+                <h1>Minute Master - Master timing & approach to coding challenges</h1>
+                <label for="difficulty">Choose difficulty level:</label>
+                <select id="difficulty">
+                    <option value="easy" selected>Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
 
-            <div class="controls">
-                <button id="start">Start</button>
-                <button id="pause">Pause</button>
-                <button id="reset">Reset</button>
+                <div class="timer">
+                    <span id="time">15:00</span>
+                </div>
+
+                <div class="controls">
+                    <button id="start">Start</button>
+                    <button id="pause">Pause</button>
+                    <button id="reset">Reset</button>
+                </div>
             </div>
 
             <h2 id="current-task">Task 1: Read Instructions Aloud</h2>
@@ -33,14 +44,6 @@
             <div class="task-list">
                 <ul id="tasks"></ul>
             </div>
-        </div>
-
-        <div class="input-container">
-            <h3>Paste challenge question</h3>
-            <textarea id="challenge-question" placeholder="Paste challenge question here..."></textarea>
-
-            <h3>Paste suggested solution (optional)</h3>
-            <textarea id="suggested-solution" placeholder="Paste suggested solution here..."></textarea>
         </div>
     </div>
 

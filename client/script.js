@@ -33,6 +33,7 @@ function formatTime(seconds) {
 }
 
 function getTaskStyle(taskName) {
+    if (taskName === "Read Instructions Aloud") return "meta";
     if (taskName.includes("Pseudo")) return "pseudocode";
     if (taskName.includes("Space-time-solution")) return "iterative";
     return "code";
@@ -66,8 +67,17 @@ async function handleCheat(taskIndex) {
     const li = taskList.children[taskIndex];
     const solutionContainer = li.querySelector('.solution-container');
 
+    // Toggle collapse if already shown
     if (solutionContainer.innerHTML.trim() !== '') {
         solutionContainer.innerHTML = '';
+        return;
+    }
+
+    const taskStyle = getTaskStyle(tasks[taskIndex]);
+
+    // Handle the special first task
+    if (taskStyle === "meta") {
+        solutionContainer.innerHTML = `<pre><code>Read the question out loud dummy. Cheating is more applicable to the next tasks.</code></pre>`;
         return;
     }
 
@@ -81,7 +91,7 @@ async function handleCheat(taskIndex) {
                 taskName: tasks[taskIndex],
                 challengeQuestion: challengeInput.value,
                 suggestedSolution: suggestedInput.value,
-                taskStyle: getTaskStyle(tasks[taskIndex])
+                taskStyle: taskStyle
             })
         });
 
