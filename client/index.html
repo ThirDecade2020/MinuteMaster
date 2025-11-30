@@ -1,38 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"> <!-- Sets the character encoding for the document -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures proper scaling on different devices -->
-    <title>MinuteMaster</title> <!-- Title of the application displayed in the browser tab -->
-    <link rel="stylesheet" href="style.css"> <!-- Links to the external CSS file for styling -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinuteMaster</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Two-column page layout */
+        .page-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+
+        .main-container {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .input-container {
+            flex: 1;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .input-container label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-container textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: vertical;
+            font-family: monospace;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container"> <!-- Main container for the application content -->
-        <h1>Minute Master - Master timing & approach to coding challenges</h1> <!-- Main heading of the application -->
-        <label for="difficulty">Choose difficulty level:</label> <!-- Label for the difficulty selector -->
-        <select id="difficulty"> <!-- Dropdown to select the difficulty level -->
-            <option value="easy" selected>Easy</option> <!-- Option for easy difficulty -->
-            <option value="medium">Medium</option> <!-- Option for medium difficulty -->
-            <option value="hard">Hard</option> <!-- Option for hard difficulty -->
-        </select>
+    <div class="page-container">
+        <!-- Left: Main timer and tasks -->
+        <div class="main-container container">
+            <h1>Minute Master - Master timing & approach to coding challenges</h1>
 
-        <div class="timer"> <!-- Container for the timer display -->
-            <span id="time">15:00</span> <!-- Displays the remaining time -->
+            <label for="difficulty">Choose difficulty level:</label>
+            <select id="difficulty">
+                <option value="easy" selected>Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+
+            <div class="timer">
+                <span id="time">15:00</span>
+            </div>
+
+            <div class="controls">
+                <button id="start">Start</button>
+                <button id="pause">Pause</button>
+                <button id="reset">Reset</button>
+            </div>
+
+            <h2 id="current-task">Task 1: Read Instructions Aloud</h2>
+
+            <div class="task-list">
+                <ul id="tasks"></ul>
+            </div>
         </div>
 
-        <div class="controls"> <!-- Container for the control buttons -->
-            <button id="start">Start</button> <!-- Button to start the timer -->
-            <button id="pause">Pause</button> <!-- Button to pause the timer -->
-            <button id="reset">Reset</button> <!-- Button to reset the timer -->
-        </div>
+        <!-- Right: Challenge inputs -->
+        <div class="input-container">
+            <div class="challenge-input">
+                <label for="challenge-question">Paste challenge question</label>
+                <textarea id="challenge-question" placeholder="Paste or type the coding challenge here..."></textarea>
+            </div>
 
-        <h2 id="current-task">Task 1: Read Instructions Aloud</h2> <!-- Displays the current task -->
-
-        <div class="task-list"> <!-- Container for the task list -->
-            <ul id="tasks"></ul> <!-- Unordered list for dynamically displaying tasks -->
+            <div class="solution-input">
+                <label for="suggested-solution">Paste suggested solution if any</label>
+                <textarea id="suggested-solution" placeholder="Optional: Paste suggested solution here..."></textarea>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- Links to the external JavaScript file for functionality -->
+    <script src="script.js"></script>
 </body>
 </html>
+
