@@ -56,6 +56,9 @@ function updateTaskList(difficulty) {
 }
 
 function escapeHtml(text) {
+    if (!text || typeof text !== 'string') {
+        return '';
+    }
     return text
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -113,19 +116,31 @@ async function handleCheat(taskIndex) {
             })
         });
 
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(errorData.error || `Server error: ${response.status}`);
+        }
+
         const data = await response.json();
+        
+        if (!data || !data.solution) {
+            throw new Error('No solution received from server');
+        }
+
         const solutions = extractCodeAndComplexity(data.solution);
 
         solutionContainer.innerHTML = '';
         solutions.forEach(s => {
-            solutionContainer.innerHTML += `<pre><code>${escapeHtml(s.code)}</code></pre>`;
+            if (s.code) {
+                solutionContainer.innerHTML += `<pre><code>${escapeHtml(s.code)}</code></pre>`;
+            }
             if (s.complexity) {
                 solutionContainer.innerHTML += `<div class="complexity">${escapeHtml(s.complexity)}</div>`;
             }
         });
     } catch (err) {
-        solutionContainer.textContent = 'Error fetching solution. Check console.';
-        console.error(err);
+        solutionContainer.innerHTML = `<div style="color: red; padding: 10px;">Error: ${escapeHtml(err.message || 'Failed to fetch solution')}</div>`;
+        console.error('Error fetching solution:', err);
     }
 }
 

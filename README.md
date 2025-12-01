@@ -78,7 +78,7 @@ MinuteMaster/
    - Create `.env` file in root directory:
      ```
      OPENAI_API_KEY=your_api_key_here
-     railway_url=https://minutemaster-production.up.railway.app
+     API_URL=https://minutemaster-production.up.railway.app
      ```
 
 3. **Install dependencies**:

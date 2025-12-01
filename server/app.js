@@ -9,7 +9,14 @@ import { dirname, resolve } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-dotenv.config({ path: resolve(__dirname, '../.env') });
+// Try to load .env file (for local development)
+// In Railway, environment variables are set directly, so this might fail
+try {
+    dotenv.config({ path: resolve(__dirname, '../.env') });
+} catch (err) {
+    console.log('No .env file found, using environment variables');
+}
+
 const app = express();
 
 // Configure CORS to allow all origins (for development and production)
@@ -24,6 +31,12 @@ app.use(cors({
 app.options('*', cors());
 
 app.use(bodyParser.json());
+
+// Check if OpenAI API key is configured
+if (!process.env.OPENAI_API_KEY) {
+    console.error('ERROR: OPENAI_API_KEY environment variable is not set!');
+    console.error('Please set it in Railway environment variables or .env file');
+}
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -59,8 +72,12 @@ Suggested solution (if any): ${suggestedSolution || "none"}`;
         const solution = completion.choices[0].message.content.trim();
         res.json({ solution });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to fetch solution." });
+        console.error('Error in /api/solve:', err);
+        const errorMessage = err.message || 'Failed to fetch solution.';
+        res.status(500).json({ 
+            error: errorMessage,
+            details: process.env.NODE_ENV === 'development' ? err.stack : undefined
+        });
     }
 });
 
