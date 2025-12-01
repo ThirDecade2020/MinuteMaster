@@ -5,7 +5,8 @@
   "scripts": {
     "start": "serve -p 8080",
     "dev": "serve -p 8080",
-    "generate-config": "node generate-config.js"
+    "generate-config": "node generate-config.js",
+    "build": "npm run generate-config"
   },
   "devDependencies": {
     "serve": "^14.2.1"

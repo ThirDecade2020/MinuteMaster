@@ -13,17 +13,25 @@ const envPath = join(rootDir, '.env');
 const configPath = join(__dirname, 'config.js');
 
 try {
-    // Read .env file
-    const envContent = readFileSync(envPath, 'utf-8');
-    const envLines = envContent.split('\n');
+    // First check environment variable (for Vercel/CI)
+    let apiUrl = process.env.API_URL || 'http://localhost:3000';
     
-    // Extract API_URL from .env
-    let apiUrl = 'http://localhost:3000'; // default
-    for (const line of envLines) {
-        const match = line.match(/^API_URL=(.+)$/);
-        if (match) {
-            apiUrl = match[1].trim();
-            break;
+    // If not in env, try to read from .env file (for local development)
+    if (!process.env.API_URL) {
+        try {
+            const envContent = readFileSync(envPath, 'utf-8');
+            const envLines = envContent.split('\n');
+            
+            for (const line of envLines) {
+                const match = line.match(/^API_URL=(.+)$/);
+                if (match) {
+                    apiUrl = match[1].trim();
+                    break;
+                }
+            }
+        } catch (fileError) {
+            // .env file doesn't exist, use default
+            console.log('No .env file found, using default or environment variable');
         }
     }
     

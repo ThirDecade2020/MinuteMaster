@@ -1,8 +1,6 @@
 {
-  "version": 2,
-  "buildCommand": "npm run generate-config",
+  "buildCommand": "npm run build",
   "outputDirectory": ".",
-  "framework": null,
   "rewrites": [
     {
       "source": "/(.*)",
