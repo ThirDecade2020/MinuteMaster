@@ -92,6 +92,45 @@ MinuteMaster/
    - Terminal 2 (Frontend): `cd client && npm start` (runs on port 8080)
    - Open `http://localhost:8080` in your browser
 
+## Railway Deployment
+
+### Prerequisites
+- Railway account (sign up at [railway.app](https://railway.app))
+- GitHub repository with your code
+
+### Deploy Steps
+
+1. **Connect Repository to Railway**:
+   - Go to [railway.app](https://railway.app) and create a new project
+   - Click "New Project" → "Deploy from GitHub repo"
+   - Select your MinuteMaster repository
+
+2. **Configure Build Settings**:
+   - Railway will auto-detect the Node.js project
+   - Root Directory: Leave empty (or set to `server` if needed)
+   - Build Command: `cd server && npm install`
+   - Start Command: `cd server && npm start`
+
+3. **Set Environment Variables**:
+   - Go to your project → Variables tab
+   - Add the following variables:
+     - `OPENAI_API_KEY`: Your OpenAI API key
+     - `PORT`: Railway sets this automatically (don't override)
+
+4. **Deploy**:
+   - Railway will automatically deploy on every push to your main branch
+   - After deployment, Railway will provide a URL (e.g., `https://minutemaster-production.up.railway.app`)
+
+5. **Update Client Config**:
+   - Update `API_URL` in your `.env` file with the Railway URL
+   - Run `cd client && npm run generate-config` to update `config.js`
+   - Commit and push the updated `config.js`
+
+### Notes
+- The server automatically uses the `PORT` environment variable provided by Railway
+- Make sure `OPENAI_API_KEY` is set in Railway's environment variables
+- The Railway URL will be different for each deployment
+
 ## Future Enhancements
 
 - **Backend Integration**: Potential setup for tracking session statistics or saving progress.
