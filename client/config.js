@@ -4,7 +4,7 @@
 
 const API_CONFIG = {
     get API_URL() {
-        return window.API_URL || 'https://minutemaster-production.up.railway.app';
+        return window.API_URL || 'http://localhost:3000';
     }
 };
 

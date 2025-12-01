@@ -11,7 +11,18 @@ const __dirname = dirname(__filename);
 
 dotenv.config({ path: resolve(__dirname, '../.env') });
 const app = express();
-app.use(cors());
+
+// Configure CORS to allow all origins (for development and production)
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    credentials: false
+}));
+
+// Handle preflight requests explicitly
+app.options('*', cors());
+
 app.use(bodyParser.json());
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
