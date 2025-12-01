@@ -131,6 +131,36 @@ MinuteMaster/
 - Make sure `OPENAI_API_KEY` is set in Railway's environment variables
 - The Railway URL will be different for each deployment
 
+## Vercel Deployment (Frontend)
+
+### Prerequisites
+- Vercel account (sign up at [vercel.com](https://vercel.com))
+- GitHub repository with your code
+- Railway backend already deployed
+
+### Deploy Steps
+
+1. **Connect Repository to Vercel**:
+   - Go to [vercel.com](https://vercel.com) and create a new project
+   - Click "Import Project" → Select your GitHub repository
+   - Select the MinuteMaster repository
+
+2. **Configure Project Settings**:
+   - **Root Directory**: Set to `client`
+   - **Framework Preset**: Select "Other" or leave as auto-detected
+   - **Build Command**: `npm run generate-config` (optional, runs automatically via vercel.json)
+   - **Output Directory**: `.` (current directory)
+
+3. **Deploy**:
+   - Click "Deploy"
+   - Vercel will automatically deploy on every push to your main branch
+   - After deployment, Vercel will provide a URL (e.g., `https://minutemaster.vercel.app`)
+
+### Notes
+- The `vercel.json` file in the `client` folder handles the configuration automatically
+- Make sure `config.js` has the correct Railway API URL before deploying
+- The frontend will automatically use the Railway backend URL from `config.js`
+
 ## Future Enhancements
 
 - **Backend Integration**: Potential setup for tracking session statistics or saving progress.
