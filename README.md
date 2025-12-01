@@ -12,9 +12,9 @@ In coding interviews and competitive programming, effective time management and 
 - **Providing start, pause, and reset controls** to give users flexibility and control over their practice sessions.
 
 ## Tech Stack
-- **HTML**: Defines the application’s structure and layout, including elements for the timer, task list, difficulty selection, and controls.
-- **CSS**: Styles the interface, focusing on readability and user experience.
-- **JavaScript**: Manages app functionality, including the timer, task sequencing, and difficulty-based task adjustments.
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Node.js, Express
+- **AI**: OpenAI API
 
 ## Project Structure
 
@@ -25,8 +25,8 @@ MinuteMaster/
 │   ├── style.css               # CSS file, styles the app for readability and focus
 │   └── script.js               # JavaScript file, contains app logic, timer, and task controls
 │
-├── server/                     # Placeholder backend (optional for future expansion)
-│   ├── app.js                  # Main server file for backend logic (future)
+├── server/                     # Backend API server
+│   ├── app.js                  # Express server with OpenAI integration
 │   ├── config/                 # Configuration files for environment settings (future)
 │   ├── controllers/            # Route handling and main controller logic (future)
 │   ├── models/                 # Database schemas for task management (future)
@@ -68,20 +68,28 @@ MinuteMaster/
 
 ## Getting Started
 
-To run the project:
-
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/ThirDecade2020/MinuteMaster.git
+   cd MinuteMaster
    ```
 
-2. **Run the application**:
-   - Open `index.html` directly in a browser, or serve it locally using:
-     ```bash
-     cd client
-     python3 -m http.server 8080
+2. **Set up environment variables**:
+   - Create `.env` file in root directory:
      ```
-   - Access the application at `http://localhost:8080`
+     OPENAI_API_KEY=your_api_key_here
+     ```
+
+3. **Install dependencies**:
+   ```bash
+   cd server && npm install
+   cd ../client && npm install
+   ```
+
+4. **Run the application**:
+   - Terminal 1 (Backend): `cd server && npm start` (runs on port 3000)
+   - Terminal 2 (Frontend): `cd client && npm start` (runs on port 8080)
+   - Open `http://localhost:8080` in your browser
 
 ## Future Enhancements
 
