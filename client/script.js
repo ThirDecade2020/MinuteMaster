@@ -101,7 +101,8 @@ async function handleCheat(taskIndex) {
     solutionContainer.innerHTML = 'Fetching solution...';
 
     try {
-        const response = await fetch('http://localhost:3000/api/solve', {
+        const apiUrl = window.API_CONFIG ? window.API_CONFIG.API_URL : 'http://localhost:3000';
+        const response = await fetch(`${apiUrl}/api/solve`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

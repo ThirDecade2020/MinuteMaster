@@ -1,9 +1,11 @@
 {
   "name": "minutemaster-client",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "start": "serve -p 8080",
-    "dev": "serve -p 8080"
+    "dev": "serve -p 8080",
+    "generate-config": "node generate-config.js"
   },
   "devDependencies": {
     "serve": "^14.2.1"
